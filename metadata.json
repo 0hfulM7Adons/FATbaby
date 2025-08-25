@@ -2,8 +2,8 @@
     "name": "FATbaby",
     "author": "ohful",
     "entry": "index.js",
-    "version": "1.0.0",
-    "description": "Cyan fastleap with more options", 
+    "version": "1.0.1",
+    "description": "Fast Leap and Auto Leap", 
     "requires": [] 
 }
   

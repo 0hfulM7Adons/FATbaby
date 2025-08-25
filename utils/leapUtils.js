@@ -33,6 +33,14 @@ export default new class leapHelper {
             Client.scheduleTask(1, () => {
                 if (this.autoLeaping && this.currentSlot > -1 && this.currentSlot < 9) {
                     Player.setHeldItemIndex(this.currentSlot);
+
+                    const leapID = Player.getInventory()?.getItems()?.find(a => a?.getName()?.removeFormatting() == "Infinileap")?.getID();
+                    if (!leapID) return;
+                    const leapSlot = parseInt(Player.getInventory().indexOf(leapID));
+                    if (this.currentSlot == leapSlot) {
+                        this.autoLeaping = false;
+                        this.currentSlot = -1;
+                    }
                 }
             })
         }).setFilteredClass(S2FPacketSetSlot);

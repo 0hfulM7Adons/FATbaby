@@ -82,11 +82,12 @@ register("chat", (message) => {
     if (!config.p2Leap || !config.p2Auto) return
 
     if (message == "⚠ Storm is enraged! ⚠") {
-        if (isPlayerInBox(...regions.pillars) && getClass() == "Mage") {
-            let leapClass = getNameByClass(config.pillarTarget)
-            let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.pillarTarget : leapClass
-            leapHelper.autoLeap(leapString)
-        } else if (isPlayerInBox(...regions.ppillar)) {
+        // if (isPlayerInBox(...regions.pillars) && getClass() == "Mage") {
+        //     let leapClass = getNameByClass(config.pillarTarget)
+        //     let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.pillarTarget : leapClass
+        //     leapHelper.autoLeap(leapString)
+        // } else 
+        if (isPlayerInBox(...regions.ppillar)) {
             let leapClass = getNameByClass(config.ppillarTarget)
             let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.ppillarTarget : leapClass
             leapHelper.autoLeap(leapString)
@@ -94,11 +95,12 @@ register("chat", (message) => {
     } 
 
     if (message == "[BOSS] Storm: Oof" || message == "[BOSS] Storm: Ouch, that hurt!") {
-        if (isPlayerInBox(...regions.ypad) && getClass() == "Mage") {
-            let leapClass = getNameByClass(config.ypadTarget)
-            let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.ypadTarget : leapClass
-            leapHelper.autoLeap(leapString)
-        } else if (isPlayerInBox(...regions.ppad)) {
+        // if (isPlayerInBox(...regions.ypad) && getClass() == "Mage") {
+        //     let leapClass = getNameByClass(config.ypadTarget)
+        //     let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.ypadTarget : leapClass
+        //     leapHelper.autoLeap(leapString)
+        // } else 
+        if (isPlayerInBox(...regions.ppad)) {
             let leapClass = getNameByClass(config.ppadTarget)
             let leapString = (leapClass === -1 || leapClass === "EMPTY") ? config.ppadTarget : leapClass
             leapHelper.autoLeap(leapString)
