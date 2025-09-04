@@ -3,8 +3,10 @@ export const Prefix = `&1[&9FATbaby&1]`
 export const MouseEvent = Java.type("net.minecraftforge.client.event.MouseEvent")
 export const S2FPacketSetSlot = Java.type("net.minecraft.network.play.server.S2FPacketSetSlot")
 export const S2DPacketOpenWindow = Java.type("net.minecraft.network.play.server.S2DPacketOpenWindow")
+export const S2EPacketCloseWindow = Java.type("net.minecraft.network.play.server.S2EPacketCloseWindow")
 export const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow")
 export const C09PacketHeldItemChange = Java.type("net.minecraft.network.play.client.C09PacketHeldItemChange")
+export const C0DPacketCloseWindow = Java.type("net.minecraft.network.play.client.C0DPacketCloseWindow")
 export const renderBossHealthOverlay = Java.type("net.minecraftforge.client.event.RenderGameOverlayEvent$Pre")
 export const BossStatus = Java.type("net.minecraft.entity.boss.BossStatus")
 
@@ -16,10 +18,10 @@ export const regions = {
     ppillar: [87, 114, 163, 172, 31, 76],
     ppad: [87, 127, 163, 172, 85, 107],
     ypad: [21, 52, 165, 177, 85, 107],
-    s1: [89, 113, 106, 143, 30, 122],
-    s2: [19, 111, 106, 143, 121, 145],
-    s3: [-6, 20, 106, 143, 50, 143],
-    s4: [-2, 89, 106, 143, 30, 51],
+    s1: [89, 113, 106, 146, 30, 122],
+    s2: [19, 111, 106, 146, 121, 145],
+    s3: [-6, 20, 106, 146, 50, 143],
+    s4: [-2, 89, 106, 152, 30, 51],
     drop: [36, 73, 58, 96, 95, 122],
     mid: [46, 63, 58, 96, 68, 85],
     p5: [14, 99, 5, 8, 52, 134]

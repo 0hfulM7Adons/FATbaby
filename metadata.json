@@ -2,7 +2,7 @@
     "name": "FATbaby",
     "author": "ohful",
     "entry": "index.js",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Fast Leap and Auto Leap", 
     "requires": [] 
 }

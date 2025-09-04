@@ -1,4 +1,4 @@
-import { Prefix, S2DPacketOpenWindow, S2FPacketSetSlot, C09PacketHeldItemChange, sendWindowClick, rightClick } from "../utils/utils"
+import { Prefix, S2DPacketOpenWindow, S2FPacketSetSlot, S2EPacketCloseWindow, C0DPacketCloseWindow, C09PacketHeldItemChange, sendWindowClick, rightClick } from "../utils/utils"
 
 export default new class leapHelper {
     constructor() {
@@ -34,9 +34,7 @@ export default new class leapHelper {
                 if (this.autoLeaping && this.currentSlot > -1 && this.currentSlot < 9) {
                     Player.setHeldItemIndex(this.currentSlot);
 
-                    const leapID = Player.getInventory()?.getItems()?.find(a => a?.getName()?.removeFormatting() == "Infinileap")?.getID();
-                    if (!leapID) return;
-                    const leapSlot = parseInt(Player.getInventory().indexOf(leapID));
+                    const leapSlot = this._findLeap();
                     if (this.currentSlot == leapSlot) {
                         this.autoLeaping = false;
                         this.currentSlot = -1;
@@ -47,20 +45,22 @@ export default new class leapHelper {
 
         register("packetReceived", (packet, event) => {
             const title = ChatLib.removeFormatting(packet.func_179840_c().func_150254_d());
-            if (title != "Spirit Leap") return;
+            if (title != "Spirit Leap") {
+                this.menuOpened = false;
+                return;
+            }
 
             this.clickedLeap = false;
             this.menuOpened = true;
 
             if (!this.target) return;
+            Client.getMinecraft().field_71462_r = null;
             cancel(event);
         }).setFilteredClass(S2DPacketOpenWindow);
 
         register("packetSent", (packet) => {
             const currSlot = packet.func_149614_c();
-            const leapID = Player.getInventory()?.getItems()?.find(a => a?.getName()?.removeFormatting() == "Infinileap")?.getID();
-            if (!leapID) return;
-            const leapSlot = parseInt(Player.getInventory().indexOf(leapID));
+            const leapSlot = this._findLeap();
             if (currSlot != leapSlot) {
                 this.autoLeaping = false;
                 this.currentSlot = -1;
@@ -71,6 +71,14 @@ export default new class leapHelper {
             this.menuOpened = false;
         })
 
+        register("packetSent", () => {
+            if (this.menuOpened) this.menuOpened = false
+        }).setFilteredClass(C0DPacketCloseWindow)
+                
+        register("packetReceived", () => {
+            if (this.menuOpened) this.menuOpened = false
+        }).setFilteredClass(S2EPacketCloseWindow)
+
         register("chat", () => {
             this._reset();
         }).setChatCriteria(/^This ability is on cooldown for (\d+)s\.$/);
@@ -78,6 +86,10 @@ export default new class leapHelper {
         register("chat", () => {
             this._reset();
         }).setCriteria(/^You have teleported to .+!$/)
+
+        register("chat", () => {
+            this._reset();
+        }).setCriteria(/^You can only use this item inside dungeons!$/)
     }
     
     leap(name) {
@@ -103,14 +115,19 @@ export default new class leapHelper {
         this.clickedLeap = false;
     }
 
+    _findLeap() {
+        for (let i = 0; i < 8; ++i) {
+            if (Player.getInventory()?.getStackInSlot(i)?.getName()?.removeFormatting() == "Infinileap") return i;
+        }
+        return -1;
+    }
+
     _openLeap() {
         if (this.menuOpened) return;
         if (this.clickedLeap) return;
 
-        const leap = Player.getInventory()?.getItems()?.find(a => a?.getName()?.removeFormatting() == "Infinileap")
-        if (!leap) return;
-        const leapSlot = parseInt(Player.getInventory().indexOf(leap));
-        if (leapSlot > 7 || leapSlot < 0) return;
+        const leapSlot = this._findLeap();
+        if (leapSlot < 0) return;
 
         if (leapSlot != Player.getHeldItemIndex()) {
             Player.setHeldItemIndex(leapSlot);
